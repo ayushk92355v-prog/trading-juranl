@@ -2,40 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Trading Journal</title>
+    <title>Trading Journal Pro</title>
     <style>
         body { background: #0d1117; color: #c9d1d9; font-family: sans-serif; padding: 20px; }
-        .page { display: none; max-width: 400px; margin: 0 auto; background: #161b22; padding: 20px; border-radius: 8px; border: 1px solid #30363d; }
-        .active { display: block; }
-        input { width: 90%; padding: 12px; margin: 10px 0; background: #0d1117; border: 1px solid #30363d; color: white; border-radius: 5px; }
-        .btn { width: 100%; padding: 12px; margin-top: 10px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; }
-        .dashboard { max-width: 500px; margin: 0 auto; display: none; }
+        .box { max-width: 400px; margin: 50px auto; background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d; text-align: center; }
+        input, select { width: 90%; padding: 10px; margin: 8px 0; background: #0d1117; border: 1px solid #30363d; color: white; border-radius: 5px; }
+        .btn { width: 95%; padding: 12px; background: #238636; border: none; color: white; cursor: pointer; border-radius: 5px; margin-top: 10px; }
+        #dashboard { display: none; max-width: 600px; margin: auto; }
+        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 20px; }
+        .day { padding: 10px; border: 1px solid #30363d; cursor: pointer; }
+        .profit { background: #238636; }
+        .loss { background: #da3633; }
     </style>
 </head>
 <body>
 
-    <div id="loginPage" class="page active">
-        <h2>Trader Login</h2>
-        <input type="text" id="u" placeholder="Username">
-        <input type="password" id="p" placeholder="Password">
-        <button class="btn" style="background:#238636" onclick="showDashboard()">Sign In</button>
+    <div id="authPage" class="box">
+        <h2 id="title">Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button class="btn" onclick="login()">Login</button>
+        <p style="font-size: 12px;">Forgot Password? Contact: iuse92355@gmail.com</p>
     </div>
 
-    <div id="dash" class="dashboard">
-        <h2>Dashboard: Trader</h2>
-        <div style="background:#161b22; padding:15px; border-radius:8px;">
-            <h3>Total Profit: ₹0</h3>
-            <h3>Total Loss: ₹0</h3>
-            <h3>Net P&L: ₹0</h3>
+    <div id="dashboard">
+        <h1>Welcome, <span id="userNameDisplay">Trader</span>!</h1>
+        <div class="box" style="margin: 20px auto;">
+            <h3>Log Trade</h3>
+            <input type="text" id="stockName" placeholder="Stock Name">
+            <input type="number" id="qty" placeholder="Quantity">
+            <input type="number" id="entry" placeholder="Entry Price">
+            <input type="number" id="exit" placeholder="Exit Price">
+            <button class="btn" onclick="addTrade()">Calculate & Save</button>
         </div>
-        <button class="btn" style="background:#d73a49" onclick="location.reload()">Logout</button>
+        <div id="calendar" class="calendar"></div>
     </div>
 
     <script>
-        function showDashboard() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('dash').style.display = 'block';
+        function login() {
+            const user = document.getElementById('username').value;
+            if(user) {
+                document.getElementById('authPage').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('userNameDisplay').innerText = user;
+                generateCalendar();
+            }
+        }
+
+        function addTrade() {
+            const entry = parseFloat(document.getElementById('entry').value);
+            const exit = parseFloat(document.getElementById('exit').value);
+            const qty = parseFloat(document.getElementById('qty').value);
+            const pl = (exit - entry) * qty;
+            alert("Net P&L: ₹" + pl.toFixed(2));
+            // Calendar logic update here
+        }
+
+        function generateCalendar() {
+            const cal = document.getElementById('calendar');
+            for(let i=1; i<=30; i++) {
+                let div = document.createElement('div');
+                div.className = 'day';
+                div.innerText = i;
+                cal.appendChild(div);
+            }
         }
     </script>
 </body>
