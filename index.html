@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Journal</title>
+    <title>Ultimate Trading Journal</title>
     <style>
-        body { background: #0d1117; color: #c9d1d9; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .page { display: none; width: 100%; max-width: 350px; background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d; text-align: center; }
+        body { background: #0d1117; color: #c9d1d9; font-family: sans-serif; padding: 20px; }
+        .page { display: none; max-width: 400px; margin: 0 auto; background: #161b22; padding: 20px; border-radius: 8px; border: 1px solid #30363d; }
         .active { display: block; }
         input { width: 90%; padding: 12px; margin: 10px 0; background: #0d1117; border: 1px solid #30363d; color: white; border-radius: 5px; }
         .btn { width: 100%; padding: 12px; margin-top: 10px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; }
-        .btn-login { background: #238636; }
-        .btn-reg { background: #1f6feb; }
+        .dashboard { max-width: 500px; margin: 0 auto; display: none; }
     </style>
 </head>
 <body>
 
     <div id="loginPage" class="page active">
-        <h2>Login</h2>
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button class="btn btn-login" onclick="alert('Login Success!')">Login</button>
-        <button class="btn btn-reg" onclick="document.getElementById('loginPage').classList.remove('active'); document.getElementById('regPage').classList.add('active');">Register</button>
+        <h2>Trader Login</h2>
+        <input type="text" id="u" placeholder="Username">
+        <input type="password" id="p" placeholder="Password">
+        <button class="btn" style="background:#238636" onclick="showDashboard()">Sign In</button>
     </div>
 
-    <div id="regPage" class="page">
-        <h2>Register</h2>
-        <input type="text" placeholder="New Username">
-        <input type="password" placeholder="New Password">
-        <button class="btn btn-reg" onclick="alert('Account Created!'); location.reload();">Create Account</button>
-        <button class="btn" style="background:#30363d;" onclick="document.getElementById('regPage').classList.remove('active'); document.getElementById('loginPage').classList.add('active');">Back</button>
+    <div id="dash" class="dashboard">
+        <h2>Dashboard: Trader</h2>
+        <div style="background:#161b22; padding:15px; border-radius:8px;">
+            <h3>Total Profit: ₹0</h3>
+            <h3>Total Loss: ₹0</h3>
+            <h3>Net P&L: ₹0</h3>
+        </div>
+        <button class="btn" style="background:#d73a49" onclick="location.reload()">Logout</button>
     </div>
 
+    <script>
+        function showDashboard() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('dash').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
